@@ -23,33 +23,24 @@ def createDensityMap(shape,name, points):
         normalized = (dens_map - np.min(dens_map)) / (np.max(dens_map) - np.min(dens_map))
 
     # Changed the sigmoid following the advice from microscopic cell image.
-    # sigmadots = 7
     sigmadots = 7
     dot_anno = gaussian_filter(normalized, sigmadots)
 
     # Following the advice from microscopic cell image.
-    #dot_anno = dot_anno * 100
     dot_anno.astype(np.float32)
 
     return dot_anno
 
 def get_all_coordinates(inputpath):
 
-    # Remove _success.txt file from the directory.
-    for folders in glob.glob(inputpath + "/*"):
-        for ascii_txt in glob.glob(folders+"/*"):
-            remove_file = ascii_txt.split("/")[-1]
-            if (remove_file == "_SUCCESS"):
-                os.remove(ascii_txt)
-
     all_coordintes = []
 
-    for folders in glob.glob(inputpath + "/*"):
+    for coordinate_file in glob.glob(inputpath + "/*"):
 
-        for each_folder in glob.glob(folders + "/*"):
+        if coordinate_file.split("/")[-1] == "coordinates.txt": 
 
             try:
-                with open(each_folder, 'r') as file_obj:
+                with open(coordinate_file, 'r') as file_obj:
                     file_contents = file_obj.readlines()
 
                     for each_line in file_contents:
@@ -66,12 +57,9 @@ def get_all_coordinates(inputpath):
 if __name__== '__main__':
 
 
-    gt_coordinate_path = "/home/mrc689/Sampled_Dataset_GT/coordinates/manual"
+    gt_coordinate_path = "/u1/rashid/FlowerCounter_Dataset_GroundTruth/coordinates/manual/1109-0704"
 
-    gt_numpy_save_path = "/home/mrc689/Sampled_Dataset_GT/density_map/manual"
-
-    #gt_numpy_save_path = "/home/mrc689/Sampled_Dataset_GT/density_map/xavier"
-    #gt_coordinate_path = "/home/mrc689/Sampled_Dataset_GT/coordinates/xavier"
+    gt_numpy_save_path = "/u1/rashid/FlowerCounter_Dataset_GroundTruth/density_map/manual/1109-0704"
 
     if not os.path.exists(gt_numpy_save_path):
         os.makedirs(gt_numpy_save_path)
@@ -92,16 +80,16 @@ if __name__== '__main__':
         gt_arr_name = img_name.split("/")[-1]
         gt_arr_name = gt_arr_name.split(".")[0]
 
-        
         arr = createDensityMap(shape=shape,name=img_name,points = d['coordinates'])
 
-        
-        output_np_path = gt_numpy_save_path + "/" + ('/'.join(img_name.split('/')[-2:-1])) + "/"
+        output_np_path = gt_numpy_save_path + "/" + gt_arr_name
 
-        #print(output_np_path)
+        print(output_np_path)
 
+        """
         if not os.path.exists(output_np_path):
             os.makedirs(output_np_path)
+        """
 
-        np.save(output_np_path+ gt_arr_name, arr)
+        np.save(output_np_path, arr)
         

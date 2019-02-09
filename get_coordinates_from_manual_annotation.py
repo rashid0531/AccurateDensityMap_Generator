@@ -4,9 +4,9 @@
 
 # Date: May 09, 2018
 
-# Description: An script to find all of the 'red' annotation markers in
-# the canola flower image
- 
+# Description: Generates the coordiantes of the flowers from manually annotated images and saves the information to a .txt file"
+# Use case : python get_coordinates_from_manual_annotation.py -i "/u1/rashid/FlowerCounter_Dataset/1109-0704" -d "/u1/rashid/FlowerCounter_Dataset_GroundTruth/coordinates/manual"
+
 # Note: - If annotating with GIMP, ensure that the image is exported at
 #         90%, otherwise the 'red' value may not fall within range.
 #       
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     DEFAULT_DEST_PATH = "/home/mrc689/Sampled_Dataset_GroundTruth"
 
     # Create arguements to parse
-    ap = argparse.ArgumentParser(description="Script to cut and paste all the images from sub folders to the parent folder.")
+    ap = argparse.ArgumentParser(description="Generates the coordiantes of the flowers from manually annotated images and saves the information to a .txt file")
 
     ap.add_argument("-i", "--image_path", required=False, help="Input path of the images",default = DEFAULT_IMAGE_PATH)
     ap.add_argument("-d", "--destination_path", required=False, help="Destination path of the images",default = DEFAULT_DEST_PATH)
@@ -78,8 +78,6 @@ if __name__ == "__main__":
 
     # Will be used for creating the same named folder in destination directory.
     input_prefix = args["image_path"].split("/")[-1]
-
-    #print(input_prefix)
 
     out_path = args["destination_path"]+"/"+input_prefix
 
@@ -95,7 +93,8 @@ if __name__ == "__main__":
         dict_towrite['image_name'] = each_file
         dict_towrite['coordinates'] = flower_coordinates
 
-        if(len(flower_coordinates) >= 5):
+	# Unnecessary steps. However, a good indicator to validate if the script is succesful in detecting the right number of flowers. 
+        if(len(flower_coordinates) >= 1000):
             print(each_file, len(flower_coordinates))
 
         Flower_dictionaries.append(dict_towrite)

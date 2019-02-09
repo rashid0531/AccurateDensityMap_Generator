@@ -1,0 +1,6 @@
+/u1/rashid/FlowerCounter_Dataset_GroundTruth/coordinates/manual/1109-0704
+/u1/rashid/FlowerCounter_Dataset/1109-0704/frame001071_2_4.jpg 1078
+/u1/rashid/FlowerCounter_Dataset/1109-0704/frame001071_2_2.jpg 1264
+/u1/rashid/FlowerCounter_Dataset/1109-0704/frame001071_2_3.jpg 982
+/u1/rashid/FlowerCounter_Dataset/1109-0704/frame001071_2_1.jpg 208
+16200
